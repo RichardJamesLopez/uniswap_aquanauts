@@ -1,0 +1,28 @@
+.headerWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-title {
+  margin-right: auto;
+}
+
+.header-title header {
+  width: 100%;
+  background-color: #ff69b4;
+  color: #000;
+  text-decoration: none;
+  text-align: center;
+}
+
+.header-title header a {
+  color: #000;
+  text-decoration: none;
+
+}
+
+@media all and (max-width: 600px) {
+  .header-title {
+    display: none;
+  }
+}

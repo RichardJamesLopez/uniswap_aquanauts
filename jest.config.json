@@ -1,0 +1,18 @@
+{ 
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "verbose": true,
+    "testRegex": "((\\.|/*.)(test))\\.js?$",
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
+    "setupFilesAfterEnv": ["./src/setupTest.js"],
+    "collectCoverage": true,
+    "transform": {".*": "<rootDir>/node_modules/babel-jest"},
+      "moduleFileExtensions": [
+        "js"
+      ],
+      "unmockedModulePathPatterns": [
+        "react"
+      ]
+  }
+  
