@@ -1,5 +1,6 @@
 {
   "name": "aquanauts",
+  "homepage": ".",
   "version": "1.0.0",
   "description": "uniswap react app",
   "main": "index.js",
