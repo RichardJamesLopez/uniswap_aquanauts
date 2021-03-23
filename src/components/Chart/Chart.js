@@ -48,7 +48,7 @@ const state = {
   labels: ['January', 'February', 'March', 'April', 'May'],
   datasets: [
     {
-      label: 'Rainfall',
+      label: 'Value (USD)',
       backgroundColor: 'rgba(75,192,192,1)',
       borderColor: 'rgba(0,0,0,1)',
       borderWidth: 2,
@@ -91,7 +91,7 @@ const Chart = () => {
         options={{
           title: {
             display: true,
-            text: 'Average Rainfall per month',
+            text: 'Liquidity Provider (LP) value in Pool',
             fontSize: 20,
           },
           legend: {
