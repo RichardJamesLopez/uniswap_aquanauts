@@ -1,98 +1,113 @@
-// import { FETCH_DATA, FETCH_DATA_SUCCESS } from "../actionTypes";
+import { gql } from "@apollo/client";
 
-// import { config } from './config';
+const ENDPOINT = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2";
 
-const apiMiddleware = store => next => async action => {
-  console.log(store);
-  // if (action.type === LOAD_GENRES) {
-  //   try {
-  //     let { genres } = await (await fetch(config.genreUrl)).json();
-  //     genres = config.arrayToObject(genres);
-  //     return next(genresSuccess(genres));
-  //   } catch (e) {
-  //     return next(genresError(e.message));
-  //   }
-  // }
-  // if (action.type === LOAD_DISCOVER_FILMS) {
-  //  next(isLoadingFilms(true));
-  //   try {
-  //     const {
-  //       results: films,
-  //       total_pages: totalPages,
-  //       total_results: count,
-  //       page,
-  //     } = await (await fetch(
-  //       config.discoverUrl(action.page, action.sortBy),
-  //     )).json();
-  //     next(totalResults(count));
-  //     next(
-  //       discoverFilmsSuccess(
-  //         films,
-  //         page,
-  //         !(page === totalPages || films.length === 0),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     return next(discoverFilmsError(e.message));
-  //   }
-  //   return next(isLoadingFilms(false));
-  // }
-
-  // if (action.type === LOAD_SEARCH_FILMS) {
-  //   next(isLoadingFilms(true));
-  //   try {
-  //     const {
-  //       results: films,
-  //       total_pages: totalPages,
-  //       total_results: count,
-  //       page,
-  //     } = await (await fetch(
-  //       config.searchUrl(action.query, action.page),
-  //     )).json();
-  //     next(totalResults(count));
-  //     next(
-  //       searchFilmsSuccess(
-  //         films,
-  //         page,
-  //         !(page === totalPages || films.length === 0),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     return next(searchFilmsError(e.message));
-  //   }
-  //   return next(isLoadingFilms(false));
-  // }
-
-  // if (action.type === LOAD_SELECTED_FILM) {
-  //   // if (config.visitedFilms.hasOwnProperty(action.id)) {
-  //   //   const selectedFilm = config.visitedFilms[action.id];
-  //   //   return next(selectedFilmSuccess(selectedFilm));
-  //   // }
-  //   const movie = checkIfMovieVisited(action.id);
-  //   if (movie) {
-  //     next(selectedFilmSuccess(movie));
-  //   }
-  //   try {
-  //     const film = await (await fetch(
-  //       config.movieIdUrl(action.id),
-  //     )).json();
-  //     const credits = await (await fetch(
-  //       config.movieCreditsUrl(action.id),
-  //     )).json();
-  //     const selectedFilm = config.combineFilmCredits(film, credits);
-  //     // Store to local storage
-  //     //config.visitedFilms[selectedFilm.id] = { ...selectedFilm };
-  //     localStorage.setItem(
-  //       `VF${action.id}`,
-  //       JSON.stringify({ selectedFilm }),
-  //     );
-  //     return next(selectedFilmSuccess(selectedFilm));
-  //   } catch (e) {
-  //     return next(selectedFilmError(e.message));
-  //   }
-  // }
-
-  return next(action);
+const requestUniSubgraph = query => {
+  return fetch(ENDPOINT, query)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
-export default apiMiddleware;
+const dateFromUnix = timestamp => {
+  const date = new Date(timestamp * 1000);
+  return date;
+};
+
+export const liquidityQuery = async timeframe => {
+  const query = gql`
+      query uniDayData {
+        uniswapDayDatas (first: ${timeframe}, orderBy: date, orderDirection: desc) {
+          date
+          totalLiquidityUSD
+        }
+      }
+    `;
+
+  const result = await requestUniSubgraph(query);
+  const uniLiquidityByDay = result.uniswapDayDatas.map(x => {
+    return {
+      date: dateFromUnix(x.date),
+      liquidity: x.totalLiquidityUSD
+    };
+  });
+  return result;
+};
+
+export const liquidutyByPoolQuery = async (timeframe, pool) => {
+  const query = gql`
+      query dailyPairLiquidity {
+        pairDayDatas (first:${timeframe}, orderBy: date, orderDirection: desc, where: {
+          pairAddress: "${pool}"
+        }
+      ) {
+        date
+          reserveUSD
+        }
+      }
+    `;
+
+  const result = await requestUniSubgraph(query);
+  const poolLiquidityByDay = result.pairDayDatas.map(x => {
+    return {
+      date: dateFromUnix(x.date),
+      liquidity: x.reserveUSD
+    };
+  });
+  return result;
+};
+
+export const userLiquidity = async (userAddress, requestedPool, numDays, blockNumber) => {
+  const userPositionByDay = [];
+  let blockNumber = (await library.getBlockNumber()) - 10;
+
+  for (let i = 0; i < numDays; i++) {
+    let pool;
+
+    const query = gql`
+      query userLiquidity {
+        user (id: "${userAddress}",
+        block: {
+          number: ${blockNumber}
+        }) {
+          liquidityPositions {
+            liquidityTokenBalance
+            pair {
+              id
+              totalSupply
+              reserveUSD
+            }
+          }
+        }
+      }`;
+
+    const result = await requestUniSubgraph(query);
+
+    if (result.user.liquidityPositions.length === 0) {
+      continue;
+    } else if (
+      result.user.liquidityPositions.length === 1 &&
+      result.user.liquidityPositions[0].pair.id === requestedPool
+    ) {
+      pool = result.user.liquidityPositions[0];
+    } else {
+      for (let k = 0; k < result.user.liquidityPositions.length; k++) {
+        if (result.user.liquidityPositions[k].pair.id === requestedPool) {
+          pool = result.user.liquidityPositions[k];
+        }
+      }
+    }
+
+    const pricePerLPToken = pool.pair.reserveUSD / pool.pair.totalSupply;
+
+    userPositionByDay.push({
+      day: i + 1,
+      userLiquidityUSD: pool.liquidityTokenBalance * pricePerLPToken
+    });
+    blockNumber -= 5760;
+  }
+  return userPositionByDay;
+};

@@ -8,7 +8,7 @@ import Home from '../Home';
 
 class App extends Component {
   async componentDidMount() {
-    fetchData();
+    this.props.fetchData();
   }
 
   render() {
@@ -17,7 +17,9 @@ class App extends Component {
       <>
         <Route
           path="/"
-          render={routerProps => <Header data={api} {...routerProps} />}
+          render={routerProps => (
+            <Header data={api} {...routerProps} />
+          )}
         />
         <Route
           path="/"
