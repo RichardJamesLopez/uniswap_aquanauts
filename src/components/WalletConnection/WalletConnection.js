@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { fetchData } from '../../actions';
+import { connectMetamask } from './ConnectMeta.js';
 import './WalletConnection.css';
 
 class WalletConnection extends Component {
@@ -12,7 +13,9 @@ class WalletConnection extends Component {
   render() {
     return (
       <div className="wallet">
-        <Button disableElevation>Connect Your Wallet Here</Button>
+        <Button onClick={connectMetamask}>
+        Connect Your Wallet Here
+        </Button>
       </div>
     );
   }
