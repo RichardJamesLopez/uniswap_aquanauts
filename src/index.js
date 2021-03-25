@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ApolloProvider, gql } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { Web3ReactProvider } from '@web3-react/core';
 import { client, getLibrary } from './config';
 import App from './components/App/App';

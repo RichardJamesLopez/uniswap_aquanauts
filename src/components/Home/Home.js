@@ -1,27 +1,34 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchData } from '../../actions';
-
 import Chart from '../Chart';
 import Sidebar from '../Sidebar';
 
 class Home extends Component {
-  componentDidMount() {
-    fetchData();
-  }
+  componentDidMount() {}
 
   render() {
+    const {
+      data: { userLiquidityData, liquidutyByPoolData },
+    } = this.props;
+
     return (
       <div>
         <Sidebar />
-        <Chart />
+        <Chart
+          chartData={{ default: 'default' }}
+          title="Liquidity Provider (LP) value in Pool"
+        />
+        <Chart
+          chartData={userLiquidityData || []}
+          title="User Liquidity"
+        />
+        <Chart
+          chartData={liquidutyByPoolData || []}
+          title="Liquidity By Pool Each Pool"
+        />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ api }) => ({
-  api,
-});
-
-export default connect(mapStateToProps, { fetchData })(Home);
+export default Home;

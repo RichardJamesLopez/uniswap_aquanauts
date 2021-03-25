@@ -1,10 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Line } from 'react-chartjs-2';
 import './Chart.css';
-import { timeframe, pool, userAddress } from '../../middleware/test';
-
-let blockNumber;
+import { timeframe } from '../../middleware/test';
 
 const liquidityQuery = gql`
 query uniDayData {
@@ -15,36 +14,7 @@ query uniDayData {
 }
 `;
 
-const liquidityByPoolQuery = gql`
-      query dailyPairLiquidity {
-        pairDayDatas (first:${timeframe}, orderBy: date, orderDirection: desc, where: {
-          pairAddress: "${pool}"
-        }
-      ) {
-        date
-          reserveUSD
-        }
-      }
-    `;
-
-const userLiquidity = gql`
-  query userLiquidity {
-     user (id: "${userAddress}",
-        block: {
-           number: ${blockNumber || 10}
-            }) {
-              liquidityPositions {
-                liquidityTokenBalance
-                pair {
-                  id
-                  totalSupply
-                  reserveUSD
-                }
-              }
-            }
-         }`;
-
-const state = {
+let defaultData = {
   labels: ['January', 'February', 'March', 'April', 'May'],
   datasets: [
     {
@@ -57,41 +27,25 @@ const state = {
   ],
 };
 
-const Chart = () => {
-  const queryMultiple = () => {
-    const res1 = useQuery(liquidityQuery);
-    const res2 = useQuery(liquidityByPoolQuery);
-    const res3 = useQuery(userLiquidity);
-    return [res1, res2, res3];
-  };
-
-  const [
-    { loading: loading1, data: data1 },
-    { loading: loading2, data: data2 },
-    { loading: loading3, data: data3 },
-  ] = queryMultiple();
-
-  if (data2) {
-    console.log('liquidityByPoolQuery data in chart', data2);
-  }
-  if (data3) {
-    console.log('userLiquidity data in chart', data3);
+const Chart = ({ chartData, title }) => {
+  if (chartData && chartData.default === 'default') {
+    const { loading, error, data } = useQuery(liquidityQuery);
+    console.log('data from liquidityQuery', data);
+    //manipulate data object to fit the defaultData structure above 
+  } else {
+    console.log('ChartData', chartData);
+    //manipulate data object to fit the defaultData structure above;
   }
 
-  if (data1) {
-    console.log('liquidityQuery data in chart', data1);
-  }
-
-  if (loading1) return <p>Loading...</p>;
 
   return (
     <div>
       <Line
-        data={state}
+        data={defaultData}
         options={{
           title: {
             display: true,
-            text: 'Liquidity Provider (LP) value in Pool',
+            text: title,
             fontSize: 20,
           },
           legend: {
