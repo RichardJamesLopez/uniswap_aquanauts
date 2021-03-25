@@ -16,8 +16,9 @@ class Home extends Component {
         <Sidebar />
         <Chart
           chartData={{ default: 'default' }}
-          title="Liquidity Provider (LP) value in Pool"
+          title="Total Uniswap Liquidity"
         />
+        {/*
         <Chart
           chartData={userLiquidityData || []}
           title="User Liquidity"
@@ -26,6 +27,7 @@ class Home extends Component {
           chartData={liquidutyByPoolData || []}
           title="Liquidity By Pool Each Pool"
         />
+        */}
       </div>
     );
   }

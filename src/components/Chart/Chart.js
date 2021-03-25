@@ -6,12 +6,12 @@ import './Chart.css';
 import { timeframe } from '../../middleware/test';
 
 const liquidityQuery = gql`
-query uniDayData {
-  uniswapDayDatas (first: ${timeframe}, orderBy: date, orderDirection: desc) {
-    date
-    totalLiquidityUSD
+  query uniDayData {
+    uniswapDayDatas (first: 60, orderBy: date, orderDirection: desc) {
+      date
+      totalLiquidityUSD
+    }
   }
-}
 `;
 
 let defaultData = {
@@ -27,14 +27,61 @@ let defaultData = {
   ],
 };
 
+const dateFromUnix = timestamp => {
+  const date = new Date(timestamp * 1000);
+  const formattedDate = date.toString().slice(4, 10);
+  return formattedDate;
+};
+
 const Chart = ({ chartData, title }) => {
   if (chartData && chartData.default === 'default') {
     const { loading, error, data } = useQuery(liquidityQuery);
     console.log('data from liquidityQuery', data);
-    //manipulate data object to fit the defaultData structure above 
+    if (loading) {
+      return 'Loading...';
+    }
+    if (error) {
+      return `Error ${error.message}`;
+    }
+    if (data) {
+      let dateData = [];
+      let liquidityData = [];
+      for (let i = data.uniswapDayDatas.length - 1; i >= 0; i--) {
+        dateData.push(dateFromUnix(data.uniswapDayDatas[i].date));
+        liquidityData.push(data.uniswapDayDatas[i].totalLiquidityUSD);
+      }
+
+      defaultData = {
+        labels: dateData,
+        datasets: [
+          {
+            label: 'Value (USD)',
+            backgroundColor: 'rgba(75,192,192,1)',
+            borderColor: 'rgba(0,0,0,1)',
+            borderWidth: 2,
+            data: liquidityData,
+          },
+        ],
+        /*
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                callback: function(value) {
+                  return `$${value}`;
+                }
+              }
+            }],
+          }
+        },*/
+      };
+    }
+
+  /*
   } else {
     console.log('ChartData', chartData);
-    //manipulate data object to fit the defaultData structure above;
+    manipulate data object to fit the defaultData structure above;
+  */
   }
 
 
