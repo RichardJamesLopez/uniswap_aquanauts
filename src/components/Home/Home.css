@@ -1,0 +1,16 @@
+.homeContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.chartContainer {
+    width: auto;
+}
+
+
+  /* @media all and (max-width: 600px) {
+    .chartContainer {
+      display: none;
+    }
+  } */
+  

@@ -8,3 +8,9 @@
   box-shadow: none;
   margin-left: auto;
 }
+
+@media all and (max-width: 600px) {
+  .wallet {
+    width: 100%;
+  }
+}

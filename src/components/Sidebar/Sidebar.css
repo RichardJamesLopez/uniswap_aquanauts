@@ -1,0 +1,11 @@
+.sideBarContainer {
+width: 30%;
+color: #595959;  ;
+}
+.drawerContainer {
+    width: 100%;
+}
+
+.sideBarContainer a {
+text-decoration: none;
+}
