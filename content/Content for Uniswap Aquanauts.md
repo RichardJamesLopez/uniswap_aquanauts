@@ -31,7 +31,9 @@ In a Traditional Finance(TradFi) model, there are market makers and large instit
 Uniswap is a decentralized trading platform that has popularized liquidity pools for Decentralized Finance and Ethereum.
 
 **Helpful links:**
-
+* [CoinTelegraph - DeFi liquidity pools, explained](https://cointelegraph.com/explained/defi-liquidity-pools-explained)
+* [CoinMarketCap - What Is Liquidity?](https://coinmarketcap.com/alexandria/glossary/liquidity)
+* [Zerion - A Deep Dive into Liquidity Pools](https://blog.zerion.io/liquidity-pools-8ac8cf8cf230)
 
 
 ## What is in your Liquidity Pool? :woman-playing-water-polo: 
