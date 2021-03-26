@@ -24,6 +24,7 @@ class Home extends Component {
               chartData={{ default: 'default' }}
               title="Liquidity Provider (LP) value in Pool"
             />
+      {/*
             <Chart
               chartData={userLiquidityData || []}
               title="User Liquidity"
@@ -32,6 +33,7 @@ class Home extends Component {
               chartData={liquidutyByPoolData || []}
               title="Liquidity By Pool Each Pool"
             />
+            */}
           </div>
         </div>
         <Page />
