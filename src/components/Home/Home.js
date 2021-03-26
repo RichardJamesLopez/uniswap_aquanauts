@@ -15,6 +15,7 @@ class Home extends Component {
     } = this.props;
 
     return (
+
       <>
         <div className="homeContainer">
           <Sidebar match={match} />
@@ -35,6 +36,7 @@ class Home extends Component {
         </div>
         <Page />
       </>
+
     );
   }
 }

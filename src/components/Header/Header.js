@@ -11,7 +11,7 @@ const Header = () => {
         <AppBar position="sticky">
           <Toolbar>
             <Typography variant="h6">
-              <Link to="/">Uniswap Astronauts</Link>
+              <Link to="/">Uniswap Aquanauts</Link>
             </Typography>
           </Toolbar>
         </AppBar>
