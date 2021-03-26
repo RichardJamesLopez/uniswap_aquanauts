@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { fetchData } from '../../actions';
 import Header from '../Header';
 import Home from '../Home';
+import Page from '../Page';
 
 class App extends Component {
   async componentDidMount() {
@@ -24,6 +25,16 @@ class App extends Component {
         <Route
           path="/"
           render={routerProps => <Home data={api} {...routerProps} />}
+        />
+
+        <Route
+          path="/liquiduty"
+          render={routerProps => <Page data={api} {...routerProps} />}
+        />
+
+        <Route
+          path="/uniswap"
+          render={routerProps => <Page data={api} {...routerProps} />}
         />
       </>
     );
