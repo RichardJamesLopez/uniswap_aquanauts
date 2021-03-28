@@ -1,5 +1,5 @@
 # Uniswap Aquanauts
-This repo is associated with this [project](https://hackmd.io/s/rypAv8ZMO). Details below are for how to get started. 
+This repo is associated with this [project](https://hackmd.io/je_ats00Q2WWAJLynrGVKg). Details below are for how to get started. 
 
 ## Table of Contents
 * [Goals](#Goals)
