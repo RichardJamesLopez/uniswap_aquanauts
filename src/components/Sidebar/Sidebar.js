@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import './Sidebar.css';
 
 const Sidebar = ({ match }) => {
-  const value = 53;
+  const value = 13;
   return (
     <div className="sideBarContainer">
       <Tabs

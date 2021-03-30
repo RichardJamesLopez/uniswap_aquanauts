@@ -26,16 +26,6 @@ class App extends Component {
           path="/"
           render={routerProps => <Home data={api} {...routerProps} />}
         />
-
-        <Route
-          path="/liquiduty"
-          render={routerProps => <Page data={api} {...routerProps} />}
-        />
-
-        <Route
-          path="/uniswap"
-          render={routerProps => <Page data={api} {...routerProps} />}
-        />
       </>
     );
   }
@@ -48,3 +38,16 @@ const mapStateToProps = ({ api }) => {
 export default connect(mapStateToProps, {
   fetchData,
 })(App);
+
+
+/*
+        <Route
+          path="/liquidity"
+          render={routerProps => <Page data={api} {...routerProps} />}
+        />
+
+        <Route
+          path="/uniswap"
+          render={routerProps => <Page data={api} {...routerProps} />}
+        />
+*/

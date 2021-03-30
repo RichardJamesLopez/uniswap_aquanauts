@@ -40,7 +40,7 @@ export const liquidityQuery = async timeframe => {
   return uniLiquidityByDay;
 };
 
-export const liquidutyByPoolQuery = async (timeframe, pool) => {
+export const liquidityByPoolQuery = async (timeframe, pool) => {
   const query = gql`
       query dailyPairLiquidity {
         pairDayDatas (first:${timeframe}, orderBy: date, orderDirection: desc, where: {

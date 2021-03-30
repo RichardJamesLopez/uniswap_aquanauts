@@ -8,10 +8,10 @@ const Header = () => {
   return (
     <div className="headerWrapper">
       <div className="header-title">
-        <AppBar position="sticky">
+        <AppBar position="relative">
           <Toolbar>
-            <Typography variant="h6">
-              <Link to="/">Uniswap Astronauts</Link>
+            <Typography variant="h5">
+              <Link to="/">Uniswap Aquanauts</Link>
             </Typography>
           </Toolbar>
         </AppBar>

@@ -1,11 +1,16 @@
 .sideBarContainer {
-width: 30%;
-color: #595959;  ;
+width: 20%;
+color: #595959;
+padding: 2%;
+
 }
 .drawerContainer {
-    width: 100%;
+    width: 50%;
+    padding: 2%;
+    background-color: #FF9966;
 }
 
 .sideBarContainer a {
-text-decoration: none;
+text-decoration-style: double;
+padding: 2%;
 }

@@ -1,15 +1,17 @@
 .wallet {
   width: auto;
-  margin: 0 0.5%;
+  margin: 1%;
   background-color: #ff8f69;
+  color: #FFFFFF;
 }
 .wallet button {
-  border-radius: 0;
+  border-radius: 1px;
   box-shadow: none;
   margin-left: auto;
+  color: #FFFFFF;
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 5px) {
   .wallet {
     width: 100%;
   }

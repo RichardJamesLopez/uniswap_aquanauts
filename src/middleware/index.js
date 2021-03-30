@@ -16,14 +16,14 @@ export const apiMiddleware = store => next => async action => {
         requestedPool,
         7,
       );
-      const liquidutyByPoolData = await liquidutyByPoolQuery(
+      /* const liquidityByPoolData = await liquidityByPoolQuery(
         timeframe,
         requestedPool,
       );
       const data = {
         userLiquidityData: userLiquidityData || {},
         liquidutyByPoolData,
-      };
+      }; */
       return next(fetchDataSuccess(data));
     } catch (e) {
       console.log('middleware error', e);

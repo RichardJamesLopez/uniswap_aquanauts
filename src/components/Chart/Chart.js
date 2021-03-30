@@ -21,8 +21,8 @@ let defaultData = {
       label: 'Value (USD)',
       backgroundColor: 'rgba(75,192,192,1)',
       borderColor: 'rgba(0,0,0,1)',
-      borderWidth: 2,
-      data: [65, 59, 80, 81, 56],
+      borderWidth: 0.5,
+      data: [65, 62, 67, 66, 71],
     },
   ],
 };
@@ -58,31 +58,14 @@ const Chart = ({ chartData, title }) => {
             label: 'Value (USD)',
             backgroundColor: 'rgba(75,192,192,1)',
             borderColor: 'rgba(0,0,0,1)',
-            borderWidth: 2,
+            borderWidth: 0.5,
             data: liquidityData,
           },
         ],
-        /*
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                callback: function(value) {
-                  return `$${value}`;
-                }
-              }
-            }],
-          }
-        },*/
       };
     }
-
-  /*
-  } else {
-    console.log('ChartData', chartData);
-    manipulate data object to fit the defaultData structure above;
-  */
   }
+
 
 
   return (
@@ -90,14 +73,26 @@ const Chart = ({ chartData, title }) => {
       <Line
         data={defaultData}
         options={{
+          maintainAspectRatio: false,
           title: {
             display: true,
             text: title,
-            fontSize: 20,
+            fontSize: 18,
           },
+          scales: {
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                        return '$' + value.toLocaleString();
+
+                    }
+                }
+            }]
+        },
           legend: {
             display: true,
-            position: 'right',
+            position: 'bottom',
           },
         }}
       />
